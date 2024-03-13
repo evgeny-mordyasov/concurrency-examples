@@ -21,6 +21,7 @@
         <module>concurrency-examples-annotations</module>
         <module>concurrency-examples-1-sequence</module>
         <module>concurrency-examples-2-stateless-servlet</module>
+        <module>concurrency-examples-3-race-conditions-in-lazy-init</module>
     </modules>
 
 
