@@ -1,4 +1,4 @@
-package rgo.concurrency.examples.stateless.servlet;
+package rgo.concurrency.examples.statelessservlet;
 
 import rgo.concurrency.examples.annotations.ThreadSafe;
 
