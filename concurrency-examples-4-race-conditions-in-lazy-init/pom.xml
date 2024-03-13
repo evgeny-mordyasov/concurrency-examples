@@ -10,7 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>concurrency-examples-3-race-conditions-in-lazy-init</artifactId>
+    <artifactId>concurrency-examples-4-race-conditions-in-lazy-init</artifactId>
 
     <dependencies>
         <!-- self-modules -->

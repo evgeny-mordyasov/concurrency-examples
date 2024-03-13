@@ -22,7 +22,7 @@
         <module>concurrency-examples-1-sequence</module>
         <module>concurrency-examples-2-stateless-servlet</module>
         <module>concurrency-examples-3-servlet-counts-requests</module>
-        <module>concurrency-examples-3-race-conditions-in-lazy-init</module>
+        <module>concurrency-examples-4-race-conditions-in-lazy-init</module>
     </modules>
 
 
