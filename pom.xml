@@ -23,6 +23,7 @@
         <module>concurrency-examples-2-stateless-servlet</module>
         <module>concurrency-examples-3-servlet-counts-requests</module>
         <module>concurrency-examples-4-race-conditions-in-lazy-init</module>
+        <module>concurrency-examples-5-servlet-attempts-to-cache-its-last-result</module>
     </modules>
 
 
