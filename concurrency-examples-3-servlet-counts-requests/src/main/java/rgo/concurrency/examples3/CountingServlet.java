@@ -1,4 +1,4 @@
-package rgo.concurrency.examples.servletcountsreqeusts;
+package rgo.concurrency.examples3;
 
 import rgo.concurrency.examples.annotations.ThreadSafe;
 

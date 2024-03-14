@@ -1,4 +1,4 @@
-package rgo.concurrency.examples.raceconditionsinlazyinit;
+package rgo.concurrency.examples4;
 
 import rgo.concurrency.examples.annotations.NotThreadSafe;
 

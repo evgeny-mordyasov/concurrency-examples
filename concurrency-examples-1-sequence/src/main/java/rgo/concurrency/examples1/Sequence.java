@@ -1,4 +1,4 @@
-package rgo.concurrency.examples.sequence;
+package rgo.concurrency.examples1;
 
 import rgo.concurrency.examples.annotations.ThreadSafe;
 
