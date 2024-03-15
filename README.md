@@ -82,13 +82,6 @@ synchronized (lock) {
 Обращение к volatile-переменной не может побудить выполняющий поток к блокированию, 
 что делает ее легковесным механизмом синхронизации.
 
-Эффекты видимости volatile-переменной выходят за пределы ее значения. Когда поток А пишет значение
-в volatile-переменную и затем
-поток В ее читает, значения всех переменных, которые были видны до этой
-записи, становятся видимыми потоку В. Запись в volatile-переменную
-похожа на выход из синхронизированного блока, а ее чтение — на вход
-в него.
-
 ---
 
 #### Безопасность из ниоткуда
@@ -139,6 +132,7 @@ public void initializeO {
 внутреннего класса содержат скрытую ссылку на него.
 
 ```java
+@NotThreadSafe
 public class ThisEscape {
     
     public ThisEscape(EventSource source) {
@@ -152,6 +146,28 @@ public class ThisEscape {
 }
 ```
 
+```java
+@ThreadSafe
+public class SafeListener {
+
+    private final EventListener listener;
+
+    private SafeListener() {
+        listener = new EventListener() {
+            public void onEvent(Event e) {
+                doSomething(e);
+            }
+        };
+    }
+
+    public static SafeListener newInstance(Eventsource source) {
+        SafeListener safe = new SafeListener();
+        source.registerListener(safe.listener);
+        return safe;
+    }
+}
+```
+
 ---
 
 #### Ускользнувший (escaped) объект
@@ -159,3 +175,123 @@ public class ThisEscape {
 Объект, который не вовремя публикуется.
 
 ---
+
+</details>
+
+
+
+<details>
+<summary>
+Рекомендации
+</summary>
+
+---
+
+Для сохранения непротиворечивости состояний обновляйте состояния родственных
+переменных в единой атомарной операции.
+
+```java
+@NotThreadSafe
+public class NumberTracker {
+    
+    private int previousNumber;
+    private int currentNumber;
+    
+    public void updateNumber(int number) {
+        previousNumber = currentNumber;
+        currentNumber = number;
+    }
+}
+```
+
+```java
+@ThreadSafe
+public class NumberTracker {
+    
+    private int previousNumber;
+    private int currentNumber;
+    
+    public synchronized void updateNumber(int number) {
+        previousNumber = currentNumber;
+        currentNumber = number;
+    }
+}
+```
+
+---
+
+Избегайте удержания блокировки во время длительных вычислений или
+операций, таких как сетевой или консольный ввод-вывод.
+
+```java
+@ThreadSafe
+@UnnacceptablyPoorConcurrency
+public class Something {
+    
+    private int count;
+    
+    public synchronized void simulateLongOperation() {
+        // code
+        count++;
+        // code
+    }
+}
+```
+
+---
+
+Чтобы обеспечить видимость актуальных значений совместных переменных, 
+синхронизируйте читающие и пишущие потоки на общем замке.
+
+---
+
+Не позволяйте ссылке `this` ускользнуть во время конструирования.
+
+Распространенной ошибкой, позволяющей ссылке `this` ускользнуть,
+является запуск потока из конструктора. Когда объект создает поток из
+своего конструктора, он почти всегда делится своей ссылкой `this` с новым
+потоком, явно или неявно. Тогда новый поток видит владеющий объект
+до своего окончательного конструирования. Нет ничего плохого в создании потока в конструкторе, но лучше
+не запускать поток сразу. Вместо этого добавьте метод start или initialize, запускающий собственный поток.
+Это позволит делиться объектом, построение которого гарантированно завершено.
+
+```java
+@NotThreadSafe
+public class ThreadExecutorService {
+    
+    private ExecutorService executor;
+
+    public ThreadExecutorService() {
+        this.executor = Executors.newSingleThreadExecutor();
+        executor.execute(this::doSomething);
+    }
+    
+    private void doSomething() {
+        // code
+    }
+}
+```
+
+```java
+@ThreadSafe
+public class ThreadExecutorService {
+    
+    private ExecutorService executor;
+
+    public ThreadExecutorService() {
+        this.executor = Executors.newSingleThreadExecutor();
+    }
+
+    public void start() {
+        executor.execute(this::doSomething);
+    }
+
+    private void doSomething() {
+        // code
+    }
+}
+```
+
+---
+
+</details>
