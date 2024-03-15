@@ -1,8 +1,8 @@
-**Глоссарий**
+### Глоссарий
 
 ---
 
-##### Атомарные операции (atomic operations)
+#### Атомарные операции (atomic operations)
 
 Операции A и B являются атомарными, если, с точки зрения потока,
 выполняющего операцию A, операция B либо была целиком выполнена
@@ -120,7 +120,7 @@ synchronized (lock) {
 public static Set<Secret> secrets;
 
 public void initializeO {
-        secrets = new HashSet<>();
+    secrets = new HashSet<>();
 }
 ```
 
@@ -143,7 +143,7 @@ public class ThisEscape {
             new EventListener() {
                 public void onEvent(Event e) {
                     doSomething(e);
-                    }
+                }
             });
     }
 }
