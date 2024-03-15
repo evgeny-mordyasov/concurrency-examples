@@ -16,8 +16,7 @@ public class UnsafeCachingServlet {
 
         if (i.equals(lastNumber.get())) {
             encodeIntoResponse(response, lastFactors.get());
-        }
-        else {
+        } else {
             BigInteger[] factors = factor(i);
             lastNumber.set(i);
             lastFactors.set(factors);

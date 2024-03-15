@@ -26,6 +26,7 @@
         <module>concurrency-examples-5-servlet-attempts-to-cache-its-last-result</module>
         <module>concurrency-examples-6-locked-by-mutual-locking</module>
         <module>concurrency-examples-7-sharing-variables-without-sync</module>
+        <module>concurrency-examples-8-mutable-integer</module>
     </modules>
 
 

@@ -17,8 +17,7 @@ public class SynchronizedCachingServlet {
 
         if (i.equals(lastNumber)) {
             encodeIntoResponse(response, lastFactors);
-        }
-        else {
+        } else {
             BigInteger[] factors = factor(i);
             lastNumber = i;
             lastFactors = factors;
