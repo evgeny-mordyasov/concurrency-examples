@@ -289,6 +289,14 @@ public class ThreadExecutorService {
 
 ---
 
+Способы обеспечения потокобезопасности классов без необходимости синхронизации включают:
+
+1) [Ограничением стеком](concurrency-examples-9.1-stack-confinement).
+2) [ThreadLocal](concurrency-examples-9.2-thread-local).
+3) [Immutable объекты](concurrency-examples-9.3-immutable-class).
+
+---
+
 </details>
 
 
@@ -392,6 +400,22 @@ public class VolatileVisibility {
 
 Блокировка может гарантировать как видимость, так и атомарность,
 а volatile-переменные гарантируют только видимость.
+
+---
+
+Immutable объекты всегда являются потокобезопасными.
+
+[Пример1](concurrency-examples-5-servlet-attempts-to-cache-its-last-result)
+
+[Пример2](concurrency-examples-9.3-immutable-class)
+
+---
+
+Объект является immutable, если:
+
+1) Его состояние невозможно изменить после конструирования.
+2) Все поля являются final.
+3) Он надлежаще сконструирован (ссылка this не ускользает).
 
 ---
 

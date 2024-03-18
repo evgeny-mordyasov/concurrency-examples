@@ -5,28 +5,17 @@ import rgo.concurrency.examples.annotations.ThreadSafe;
 import java.math.BigInteger;
 
 @ThreadSafe
-public class CachingServlet {
+public class CachingServletV3 {
 
-    private BigInteger lastNumber;
-    private BigInteger[] lastFactors;
+    private volatile OneValueCache cache = new OneValueCache();
 
     public void doGet(ServletRequest request, ServletResponse response) {
         BigInteger i = extractFromRequest(request);
-        BigInteger[] factors = null;
-
-        synchronized (this) {
-            if (i.equals(lastNumber)) {
-                factors = lastFactors.clone();
-            }
-        }
+        BigInteger[] factors = cache.getFactors(i);
 
         if (factors == null) {
             factors = factor(i);
-
-            synchronized (this) {
-                lastNumber = i;
-                lastFactors = factors.clone();
-            }
+            cache = new OneValueCache(i, factors);
         }
 
         encodeIntoResponse(response, factors);
