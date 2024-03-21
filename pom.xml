@@ -31,6 +31,7 @@
         <module>concurrency-examples-9.2-thread-local</module>
         <module>concurrency-examples-9.3-immutable-class</module>
         <module>concurrency-examples-10-safe-publication</module>
+        <module>concurrency-examples-11-monitor-pattern</module>
     </modules>
 
 
